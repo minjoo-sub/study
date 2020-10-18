@@ -35,3 +35,30 @@
 </html>
 
 <!-- vue 스크립트 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js"> /* vue 플러그인 임포트 */</script>
+<script>
+    new Vue({
+        el: '#my',
+        data: {
+            message: 'change message at mounted!!!',
+        },
+        methods: {
+            doClick: function (event) {
+                console.log(this.$data);
+                //this.$data.message = 'change message when a button clicked!!!';
+                this.$set(this.$data, 'message', 'change message when a button clicked!!!');
+            },
+            sec3: function (event) {
+                this.$data.message = 'change message after 3 seconds!!!';
+            }
+        },
+        // computed: {
+        //     zz: function () {
+        //         window.setTimeout(function () {
+        //             return this.$data.message = 'change message when a button clicked!!!';
+        //             this.$methods.sec3();
+        //         }, 100);
+        //     }
+        // }
+    });
+</script>

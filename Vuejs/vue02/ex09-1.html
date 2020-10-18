@@ -1,17 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    
+
 </head>
+
 <body>
 
-    
-    
+
+
 </body>
+
 </html>
+<script>
+    var Dog = {
+        name: 'fido',
+        weight: 40,
+        breed: 'Mixed',
+        loves: ['walks', 'fetching balls']
+    }
 
+    // 사용시 소스 코드 못봄
+    // debugger;
 
-
+    // html 태그를 객체로 만들어보기
+    // < p id = "a1" class="b1" src = "" style = "" href = "" ></p >
+    // html 속성 = javascript 객체의 프로퍼티
+    var p = {
+        id: 'a1',
+        class: 'b1',
+        style: '',
+        src: '',
+        href: ''
+    }
+
+    console.log(p['id']);
+</script>

@@ -38,14 +38,37 @@
     <hr>
 
     <div id="app">
-        {{ message }}
+        {{ messsage2 }}
     </div>
 
     <div id="app2">
-        {{ message }}
+        {{ message2 }}
     </div>
 </body>
 
 </html>
 
 <!-- vue 스크립트 플러그인 임포트 -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js"> /* vue 플러그인 임포트 */</script>
+<script>
+    var aa = '같이 씁시다';
+    var obj = {
+        message: '오브젝트로 이용하기'
+    }
+    var vm1 = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello',
+            message2: aa,
+        },
+        // data: obj --> 결과 값 : 오브젝트로 이용하기
+    });
+    var bb = vm1.$data.message;
+    var vm2 = new Vue({
+        el: '#app2',
+        data: {
+            message: 'vue.js입니다',
+            message2: bb,
+        }
+    });
+</script>

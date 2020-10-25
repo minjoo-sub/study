@@ -35,11 +35,46 @@
     <div id="app">
         {{ message }}
         <!-- 버튼 기능 추가-->
-        
+        <button v-on:click="btnclick">클릭</button>
     </div>
 </body>
 
 </html>
 
 <!-- vue 스크립트 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js"> /* vue 플러그인 임포트 */</script>
+<script>
+    //import axios from "axios";
 
+    new Vue({
+        /* edtmc^2w */
+        el: "#app",
+        data: {
+            message: '내이름은',
+            num: 1,
+        },
+        //template: ``,
+        methods: {
+            btnclick: function () {
+                this.$data.num++;
+                Vue.set(this.$data, 'message', '김민주' + this.$data.num);
+                //this.$data.message = '김민주';
+            }
+        },
+        components: {},
+        computed: {
+
+        },
+        watch: {
+
+        },
+        mounted: function () {
+            console.log("mounted");
+            //this.$data.message = 'change mounted';
+        },
+        updated: function () {
+            console.log("updated");
+
+        },
+    });
+</script>

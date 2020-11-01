@@ -12,6 +12,13 @@
             vertical-align: middle;
             line-height: 2em;
         }
+
+        #app2 * {
+            text-align: center;
+            vertical-align: middle;
+            line-height: 2em;
+        }
+
         p {
             top: 50%;
             text-align: center;
@@ -20,7 +27,7 @@
 
         header {
             background-color: orange;
-            margin: 10px 0 ;
+            margin: 10px 0;
             width: 100%;
             height: 60px;
         }
@@ -28,23 +35,44 @@
         /* <div id="content-list"> */
         #content {
             background-color: white;
-            margin: 0 0 30px 0 ;
+            margin: 0 0 30px 0;
+        }
+
+        #content1 {
+            background-color: white;
+            margin: 0 0 30px 0;
         }
 
         aside {
             background-color: gray;
-            margin: 20px ;
+            margin: 20px;
             width: calc(50% - 40px);
             height: 200px;
             float: left;
         }
+
         #content-list {
             background-color: gray;
-            margin: 20px ;
+            margin: 20px;
             width: calc(50% - 40px);
             float: right;
             height: 200px;
         }
+
+        #content-list1 {
+            background-color: gray;
+            margin: 20px;
+            width: calc(50% - 40px);
+            float: right;
+            height: 200px;
+        }
+
+        #content1::after {
+            clear: both;
+            display: block;
+            content: '';
+        }
+
         #content::after {
             clear: both;
             display: block;
@@ -52,7 +80,7 @@
         }
 
         footer {
-            margin: 10px 0 ;
+            margin: 10px 0;
             background-color: lightblue;
             width: 100%;
             height: 50px;
@@ -63,25 +91,25 @@
 
 <body>
     <xmp>
-    5개의 컴포넌트 만들기
+        5개의 컴포넌트 만들기
         component-header
         component-content
         component-footer
         component-aside
         component-content-list
-        
-    전역 컴포넌트 : 3개 
+
+        전역 컴포넌트 : 3개
         component-header
         component-content
         component-footer
-        
-    지역 컴포넌트: 2개
+
+        지역 컴포넌트: 2개
         component-aside
         component-content-list
-        
+
     </xmp>
     <hr />
-    
+
     <div id="app">
         <header>
             Header
@@ -99,11 +127,117 @@
             Footer
         </footer>
     </div>
-    
-    
+
+    <div id="app2">
+        <component-header>
+            Header
+        </component-header>
+        <component-content>
+
+            <!-- <component-aside>
+                Aside
+            </component-aside>
+            <component-content-list>
+                List
+            </component-content-list> -->
+        </component-content>
+        <component-footer></component-footer>
+    </div>
+
+
 </body>
 
 </html>
 
 <!-- vue 스크립트 플러그인 임포트   -->
-
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js"> /* vue 플러그인 임포트 */</script>
+<script>
+    //import axios from "axios";
+
+
+    var aside1 = {
+        template: `
+            <aside>
+                Aside
+            </aside>
+            
+        `,
+    };
+
+    var content1 = {
+        template: `
+        <div id="content-list1">
+                List
+            </div>
+        `,
+    };
+
+
+    Vue.component("component-header", {
+        /* pdtmc^2w */
+        template: `
+            <header>
+                Header
+            </header>
+        `,
+    });
+    Vue.component("component-content", {
+        template: `
+        <div id="content1">
+            <p>Content</p>
+            
+            <component-aside>
+                Aside
+            </component-aside>
+            <component-content-list>
+                List
+            </component-content-list>
+            
+        </div>
+        `,
+        components: {
+            'component-aside': aside1,
+            'component-content-list': content1,
+        },
+    });
+    Vue.component("component-footer", {
+        /* pdtmc^2w */
+        props: [],
+        data: function () {
+            return {}
+        },
+        template: `
+            <footer>
+                Footer
+            </footer>
+        `,
+        methods: {
+
+        },
+        components: {},
+        computed: {
+
+        },
+        watch: {
+
+        },
+    });
+
+    new Vue({
+        /* edtmc^2w */
+        el: "#app2",
+        data: {
+
+        },
+        components: {
+
+        },
+        mounted: function () {
+            console.log("mounted");
+        },
+        updated: function () {
+            console.log("updated");
+        },
+    });
+</script>

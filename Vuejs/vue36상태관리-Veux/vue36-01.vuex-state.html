@@ -11,7 +11,7 @@
 
     <!-- CSS import -->
     <link rel="stylesheet" href="../css/reset.css">
-	
+
 </head>
 
 <body>
@@ -28,6 +28,7 @@
        컴포넌트가 많은 경우 props나 이벤트, 이벤트버스를 사용하여 상태를 관리하는 것은 효율적이지 않습니다.
        컴포넌트가 많은 경우 효율적인 컴포넌트 간의 통신이나 데이터 관리 방밥이 필요합니다.
        그것이 Vuex 입니다.
+       - 데이터 관리를 인스턴스에서 하지않음 >> vuex에서 관리
 
       1.3 상태 관리로 해결할 수 있는 문제점?
        상태 관리는 중대형 규모의 웹 애플리케이션에서 컴포넌트 간에 데이터를 더 효율적으로 전달할 수 있습니다.
@@ -66,4 +67,96 @@
 
 </html>
 
-<!-- vue 스크립트 플러그인 임포트   -->
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js"> /* vue 플러그인 임포트 */</script>
+<script src="https://unpkg.com/vuex@3.3.0/dist/vuex.js"> /* vuex 플러그인 임포트 */</script>
+<script>
+    //import axios from "axios";
+
+    // vuex 인스턴스 만들기
+    var store = new Vuex.Store({
+        actions: {
+            /*
+                action
+                -- 비동기 처리를 위해
+                -- 첫번째 인자는 무조건 mutations 사용
+                -- 두번째 인자는 넘기고자 하는 값 사용
+            */
+            increment: function (mutations, value) {
+                // 비동기 호출
+                window.setTimeout(function () {
+                    mutations.commit('increment', value);
+                }, 3000);
+            },
+            decrement: function (mutations, value) {
+                window.setTimeout(function () {
+                    mutations.commit('decrement', value);
+                }, 3000);
+            }
+        },
+        mutations: {
+            increment: function (state, value) {
+                // statte 변경, value는 변경하고자 하는 값
+                state.counter = state.counter + value;
+            },
+            decrement: function (state, value) {
+                state.counter = state.counter + value;
+            }
+        },
+        state: {
+            /* vue 인스턴스에서 사용되는 state */
+            counter: 0,
+            welcome: 'HELLO WORLD'
+        },
+        getters: {
+            // 메서드로 만드는데 메서드명은 state의 이름을 그대로사용한다.
+            counter: function (state) {
+                return state.counter;
+            },
+            welcome: function (state) {
+                return state.welcome
+            }
+        },
+    });
+    // vue 인스턴스
+    new Vue({
+        /* edtmc^2w */
+        el: "#app",
+        data: {
+            header: 'Vuex 사용 앱',
+            // welcome: 'HELLO WORLD',
+            // counter: 0,
+        },
+        //template: ``,
+        methods: {
+            increment: function (event) {
+                console.log('increment');
+                // dispaucth('액션명', 값)
+                store.dispatch('increment', 10);
+            },
+            decrement: function (event) {
+                console.log('decrement');
+                store.dispatch('decrement', -10);
+            },
+        },
+        components: {},
+        computed: {
+            counter: function () {
+                return store.getters.counter;
+            },
+            welcome: function () {
+                return store.getters.welcome;
+            }
+        },
+        watch: {
+
+        },
+        mounted: function () {
+            console.log("mounted");
+        },
+        updated: function () {
+            console.log("updated");
+        },
+    });
+
+</script>

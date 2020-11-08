@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <style>
-        #app > div {
-            width: 300px;
-            height: 250px;
+        #app>div {
+            width: 600px;
+            height: 400px;
             margin: 3px;
-            float: left;
+            /* float: left; */
         }
 
         table {
@@ -50,7 +50,7 @@
         </div>
         <div>
             <div>
-                <a href="#" id="menu3" v-on:click="clickMenu3">메뉴 보기 3:</a>
+                <a href="javascript:;" id="menu3" v-on:click="clickMenu3">메뉴 보기 3:</a>
             </div>
             <br>
             <a href="http://localhost:5050/json" target="_blank">http://localhost:5050/json</a>
@@ -103,4 +103,55 @@
 </body>
 
 </html>
-
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js"> /* vue 플러그인 임포트 */</script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"> /* axios : vue 비동기 처리 플러그인 임포트 */</script>
+<script>
+    //import axios from "axios";
+
+    new Vue({
+        /* edtmc^2w */
+        el: "#app",
+        data: {
+            message1: null,
+            message2: null,
+            message3: null,
+            message4: null,
+        },
+        //template: ``,
+        methods: {
+            clickMenu1: function (event) { },
+            clickMenu2: function (event) { },
+            clickMenu3: function (event) {
+                axios({
+                    url: 'http://localhost:5050/json',
+                    methods: 'get',
+                    params: '',
+                    timeout: 30000,
+                    responType: 'json',
+                }).then((res) => {
+                    console.log(res.data);
+                    //this.$data.message3 = res.data;
+                    Vue.set(this.$data, 'message3', res.data);
+                }).catch((err) => {
+                    alert(res.err);
+                });
+            },
+            clickMenu4: function (event) { },
+        },
+        components: {},
+        computed: {
+
+        },
+        watch: {
+
+        },
+        mounted: function () {
+            console.log("mounted");
+        },
+        updated: function () {
+            console.log("updated");
+        },
+    });
+</script>

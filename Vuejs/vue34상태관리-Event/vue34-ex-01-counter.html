@@ -67,13 +67,17 @@
     부모의 counter를 자식에서 num 으로 받는다.
     4. 사용자 이벤트를 사용하여 Child 컴포넌트에서
     Parent 컴포넌트로 값을 전달되게 한다.
+
+    부모 클릭하면 1씩 플/마 --> MouseEvent 온다
+    자식 클릭하면 10씩 플/마 --> 숫자 값 온다
+    - 마우스 이벤트와 숫자값 구별 방법 / typeof 로
   </xmp>
   <hr>
 
   <div id="app" class="component-parent">
     Parent counter : {{ counter }} <br>
-    <button name="parent" v-on:click="addCounter(this.event, +1)">+</button>
-    <button name="parent" v-on:click="subCounter(this.event, -1)">-</button>
+    <button name="parent" v-on:click="addCounter">+</button>
+    <button name="parent" v-on:click="subCounter">-</button>
     <p></p>
 
     <!-- Child 컴포넌트를 등록하고 counter 데이터 속성을 props로 전달한다. -->
@@ -94,21 +98,19 @@
       return {}
     },
     template: `
-    <div class="component-child">
-      Child counter : {{ num }} <br>
-      <button name="child" v-on:click="addCounter">+</button>
-      <button name="child" v-on:click="subCounter">-</button>
-    </div>
+      <div class="component-child">
+        Child counter : {{ num }} <br>
+        <button name="child" v-on:click="addCounter">+</button>
+        <button name="child" v-on:click="subCounter">-</button>
+      </div>
       `,
     methods: {
-
-    },
-    components: {},
-    computed: {
-
-    },
-    watch: {
-
+      addCounter: function (event) {
+        this.$emit('add-counter', +10);
+      },
+      subCounter: function (event) {
+        this.$emit('sub-counter', -10);
+      },
     },
   });
   //import axios from "axios";
@@ -117,15 +119,24 @@
     /* edtmc^2w */
     el: "#app",
     data: {
-      counter: null,
+      counter: 0,
     },
     //template: ``,
     methods: {
-      addCounter: function (event, n) {
-        Vue.set(this.$data, 'counter', this.$data.counter + 1);
+      addCounter: function (event) {
+        if (typeof event === 'number') {
+          Vue.set(this.$data, 'counter', this.$data.counter + event);
+        } else {
+          Vue.set(this.$data, 'counter', this.$data.counter + 1);
+        }
       },
-      subCounter: function (event, n) {
-        Vue.set(this.$data, 'counter', this.$data.counter--);
+      subCounter: function (event) {
+        if (typeof event === 'number') {
+          Vue.set(this.$data, 'counter', this.$data.counter + event);
+        } else {
+          Vue.set(this.$data, 'counter', this.$data.counter - 1);
+        }
+
       },
     },
   });

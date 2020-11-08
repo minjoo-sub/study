@@ -70,4 +70,81 @@
 
 </html>
 
-<!-- vue 스크립트 플러그인 임포트 -->
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js"> /* vue 플러그인 임포트 */</script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"> /* axios : vue 비동기 처리 플러그인 임포트 */</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"> /* jQuery library */</script>
+<script>
+    //import axios from "axios";
+
+    new Vue({
+        /* edtmc^2w */
+        el: "#app",
+        data: {
+            message1: null,
+            message2: null,
+        },
+        //template: ``,
+        methods: {
+            clickMenu1: function (event) {
+                axios({
+                    url: 'http://localhost:5050/html',
+                    methods: 'get',
+                    params: {},
+                    timeout: 30000,
+                    responseType: 'html',
+                })
+                    .then((res) => {
+                        console.log(res.data);
+                        //debugger;
+                        // this.$data.message1 = res.data;
+                        Vue.set(this.$data, 'message1', res.data);
+                    })
+                    .catch((err) => {
+                        console.log(res.err);
+                    });
+            },
+            clickMenu2: function (event) {
+                axios({
+                    url: 'http://localhost:5050/html',
+                    methods: 'get',
+                    params: {},
+                    timeout: 30000,
+                    responseType: 'html',
+                })
+                    .then((res) => {
+                        //console.log(res.data);
+
+                        //juery를 사용하여 res.data에서 ul태그를 추출
+                        var $ul = $(res.data).filter('ul');
+                        //console.log($ul);
+
+                        // this.$data.message2 = $ul.html();
+                        Vue.set(this.$data, 'message2', $ul.html());
+                    })
+                    .catch((err) => {
+                        console.log(res.err);
+                    });
+            },
+            clickAlert: function (event) {
+                if (event.target.tagName.toLowerCase() == 'li') {
+                    //alert(event.target.innterText);
+                    console.log(event.target.innerText);
+                }
+            },
+        },
+        components: {},
+        computed: {
+
+        },
+        watch: {
+
+        },
+        mounted: function () {
+            console.log("mounted");
+        },
+        updated: function () {
+            console.log("updated");
+        },
+    });
+</script>

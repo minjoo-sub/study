@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
 
-    <link rel="stylesheet" href="../css/reset.css"/>
+    <link rel="stylesheet" href="../css/reset.css" />
 </head>
 
 <body>
@@ -43,4 +43,70 @@
 
 <!-- react 플러그인 include   -->
 <!-- 주의: 사이트를 배포할 때는 "development.js"를 "production.min.js"로 대체하세요. -->
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/react/16.12.0/umd/react.development.js"> /* import { React} from 'react'; */</script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.11.0/umd/react-dom.development.js"> /* import { ReactDOM } from 'react-dom'; */</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"> /* JSX를 자바스크립트로 변환 */</script>
+<script type="text/babel">
+    //import React, { Component } from 'react'
+    //import ReactDOM from 'react-dom'
 
+    console.log(React)
+    console.log(ReactDOM)
+
+    class ElectronClock extends React.Component {
+
+        static defaultProps = {  /*  props의 디폴트 값 설정 */ }
+        static propsTypes = {  /* props의 프로퍼티 타입 설정 */ }
+        state = {
+            style: { fontSize: '80pt' },
+            timer: null,
+            h: 0,
+            m: 0,
+            s: 0,
+        }
+        z2(str) {
+            // 오전 4시 ==> 04 
+            var href = "0" + str;
+            var ext = href.substr(-2);
+            return ext;
+        }
+        componentDidMount() {
+            // 마운트 완료 후에  : 페이지 load 될 때 한번
+            this.state.timer = window.setInterval(() => {
+                const d = new Date();
+
+                this.state.h = d.getHours();
+                this.state.m = d.getMinutes();
+                this.state.s = d.getSeconds();
+
+                this.state.h = this.z2(this.state.h);
+                this.state.m = this.z2(this.state.m);
+                this.state.s = this.z2(this.state.s);
+            }, 1000)
+        }
+        componentDidUpdate(prevProps, prevState) {
+            // 업데이트 완료 후에 : 여러번, state 가 변경될 때마다
+            console.log(this.state.h, this.state.m, this.state.s);
+        }
+        componentWillUnmount() {
+            // 언마운트 완료 후에 : 페이지 unload 될 때 한번
+        }
+        render() {
+            return (
+                <div style={this.state.style}>
+                    {this.state.h} : {this.state.m} : {this.state.s}
+                </div>
+            )
+        }
+    }
+
+    //export default ElectronClock
+
+    ReactDOM.render(
+        <ElectronClock />, document.getElementById('app')
+    );
+
+
+</script>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -45,9 +46,9 @@
         <div id="parent">
             <div id="child">
                 4
-                <br/>
+                <br />
                 I am a child
-                <br/>
+                <br />
                 <button onClick="doParentToggleFromChild">
                     toggle
                 </button>
@@ -55,8 +56,91 @@
         </div>
     </div>
 </body>
+
 </html>
+
 
 <!-- react 플러그인 include   -->
 <!-- 주의: 사이트를 배포할 때는 "development.js"를 "production.min.js"로 대체하세요. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js">/* JSX를 자바스크립트로 변환 */</script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/react/16.12.0/umd/react.development.js"> /* import { React} from "react"; */</script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.11.0/umd/react-dom.development.js">/* import { ReactDOM } from "react-dom"; */</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.5/redux.js"> /* import {Redux} from "redux"; */</script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/react-redux/7.1.3/react-redux.js">/* import {ReactRedux} from "react-redux"; */</script>
+<script type="text/babel">
+    //import React, { Component } from 'react'
+    //import ReactDOM from 'react-dom'
 
+    console.log(React)
+    console.log(ReactDOM)
+
+    class Child extends React.Component {
+        doParentToggleFromChild = (event) => {
+            // 이벤트 핸들러는 화살표 함수로 만들면 this를 bind() 생략해도 된다
+            console.log(event.target)
+            if (event.shiftKey == true) {
+                this.props.doParentToggleFromChild(10);
+            } else {
+                this.props.doParentToggleFromChild(1);
+            }
+        }
+        render() {
+            return (
+                <div id="child">
+                    {this.props.counter}
+                    <br />
+                     I am a child
+                    <br />
+                    <button onClick={this.doParentToggleFromChild}>
+                        toggle
+                    </button>
+                </div>
+            )
+        }
+    }
+    class Parent extends React.Component {
+
+        state = {
+            counter: 0,
+        }
+        style = {
+
+        }
+        func = {
+            /* 
+                자식에게 넘겨줄 메서드 정의
+                일반 메서드는 constructor에서 this 바인딩 해야 한다.
+            */
+            doParentToggleFromChild(params) {
+                this.setState({
+                    ...this.state,
+                    counter: this.state.counter + params,
+                })
+            }
+        }
+        constructor(props) {
+            super()
+            // this 바인딩
+            this.func.doParentToggleFromChild = this.func.doParentToggleFromChild.bind(this);
+        }
+        handler = (event) => {
+            // 이벤트 핸들러는 화살표 함수로 만들면 this를 bind() 생략해도 된다
+            console.log(event.target)//
+        }
+        render() {
+            return (
+                <div id="parent">
+                    <Child {...this.state} {...this.props} {...this.func} {...this.style}></Child>
+                </div>
+            )
+        }
+    }
+
+    //export default Parent
+    ReactDOM.render(
+        <Parent></Parent>, document.getElementById('app')
+    );
+</script>

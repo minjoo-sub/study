@@ -61,6 +61,7 @@
         static propsTypes = {  /* props의 프로퍼티 타입 설정 */ }
         state = {
             style: { fontSize: '80pt' },
+            hms: null,
             timer: null,
             h: 0,
             m: 0,
@@ -74,21 +75,26 @@
         }
         componentDidMount() {
             // 마운트 완료 후에  : 페이지 load 될 때 한번
-            this.state.timer = window.setInterval(() => {
+            this.timer = window.setInterval(() => {
                 const d = new Date();
 
-                this.state.h = d.getHours();
-                this.state.m = d.getMinutes();
-                this.state.s = d.getSeconds();
+                let h = d.getHours();
+                let m = d.getMinutes();
+                let s = d.getSeconds();
 
-                this.state.h = this.z2(this.state.h);
-                this.state.m = this.z2(this.state.m);
-                this.state.s = this.z2(this.state.s);
+                h = this.z2(h);
+                m = this.z2(m);
+                s = this.z2(s);
+
+                this.setState({
+                    // hms: '${ h } : ${ m } : ${ s }'
+                    hms: h + ':' + m + ':' + s
+                });
             }, 1000)
         }
         componentDidUpdate(prevProps, prevState) {
             // 업데이트 완료 후에 : 여러번, state 가 변경될 때마다
-            console.log(this.state.h, this.state.m, this.state.s);
+            // console.log(this.state.h, this.state.m, this.state.s);
         }
         componentWillUnmount() {
             // 언마운트 완료 후에 : 페이지 unload 될 때 한번
@@ -96,17 +102,15 @@
         render() {
             return (
                 <div style={this.state.style}>
-                    {this.state.h} : {this.state.m} : {this.state.s}
+                    {this.state.hms}
                 </div>
             )
         }
     }
 
     //export default ElectronClock
-
     ReactDOM.render(
         <ElectronClock />, document.getElementById('app')
     );
-
 
 </script>

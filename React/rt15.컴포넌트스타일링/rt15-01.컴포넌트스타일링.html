@@ -13,8 +13,10 @@
             display: inline-block;
             background-color: gray;
             border: 10px solid black;
-            height: 63px; /* Math.round(Math.random() * 30) + 50 */
-            width: 228px; /* Math.round(Math.random() * 300) - 50 */
+            height: 63px;
+            /* Math.round(Math.random() * 30) + 50 */
+            width: 228px;
+            /* Math.round(Math.random() * 300) - 50 */
         }
     </style>
 </head>
@@ -32,11 +34,11 @@
 
         아래의 CSS를 사용한다
         {
-            display: inline-block;
-            background-color: gray;
-            border: 10px solid black;
-            height: 63px; /* Math.round(Math.random() * 30) + 50 */
-            width: 228px; /* Math.round(Math.random() * 300) - 50 */
+        display: inline-block;
+        background-color: gray;
+        border: 10px solid black;
+        height: 63px; /* Math.round(Math.random() * 30) + 50 */
+        width: 228px; /* Math.round(Math.random() * 300) - 50 */
         }
     </xmp>
     <hr>
@@ -54,6 +56,40 @@
 
 <!-- react 플러그인 include   -->
 <!-- 주의: 사이트를 배포할 때는 "development.js"를 "production.min.js"로 대체하세요. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js">/* JSX를 자바스크립트로 변환 */</script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/react/16.12.0/umd/react.development.js"> /* import { React} from "react"; */</script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.11.0/umd/react-dom.development.js">/* import { ReactDOM } from "react-dom"; */</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.5/redux.js"> /* import {Redux} from "redux"; */</script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/react-redux/7.1.3/react-redux.js">/* import {ReactRedux} from "react-redux"; */</script>
+<script type="text/babel">
 
+    console.log(React)
+    console.log(ReactDOM)
 
-
+    class CompStyle extends React.Component {
+        static defaultProps = {  /*  props의 디폴트 값 설정 */ }
+        static propsTypes = {  /* props의 프로퍼티 타입 설정 */ }
+        state = {
+            style1: {
+                display: "inline-block",
+                backgroundColor: 'gray',
+                border: '10px solid black',
+                height: '63px', /* Math.round(Math.random() * 30) + 50 */
+                width: '228px', /* Math.round(Math.random() * 300) - 50 */
+            },
+        }
+        render() {
+            return (
+                <div style={this.state.style1}>hi</div>
+            )
+        }
+    }
+
+    //export default rt15-01.컴포넌트스타일링
+    ReactDOM.render(
+        <CompStyle></CompStyle>, document.getElementById('app')
+    );
+</script>
